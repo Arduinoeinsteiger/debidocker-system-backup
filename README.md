@@ -11,7 +11,7 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 - **Öffentliche IP:** 77.74.80.68
 - **Betriebssystem:** Debian 12 (Bookworm)
 
-## 🐳 ALLE Docker-Services
+## 🐳 Docker-Services
 
 ### ✅ Laufende Services
 - **Nextcloud** (Port 8080)
@@ -27,12 +27,7 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
   - Domain: monitoring.vgnc.org
   - Real-time Monitoring
 
-- **Zabbix** (Monitoring) (Ports 10051, 10050)
-  - Web-Frontend: http://localhost/zabbix/
-  - Login: Admin / zabbix
-  - Datenbank: MariaDB
-
-## �� Backup-Strategie
+## 📦 Backup-Strategie
 
 ### GitHub-Repository
 - Docker-Compose-Dateien
@@ -42,7 +37,7 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 
 ### Lokale Backups
 - **ALLE Docker-Volumes** (sehr wichtig!)
-- Datenbank-Dumps (PostgreSQL + MariaDB)
+- Datenbank-Dumps (PostgreSQL)
 - System-Logs
 - Redis-Dumps
 
@@ -53,10 +48,10 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 git clone https://github.com/Arduinoeinsteiger/debidocker-system-backup.git
 cd debidocker-system-backup
 
-# ALLE Docker-Services starten
+# Docker-Services starten
 docker-compose up -d
 
-# Prüfe alle Services
+# Prüfe Services
 docker ps
 ```
 
@@ -65,8 +60,6 @@ docker ps
 - **Cloudflare API-Token:** P7tzGS9A29be-ezahWFtPvBJ0xnsRogSv395AzxP
 - **Nextcloud Admin:** nextcloud_vgnc_2024
 - **TURN-Server:** talkpassword123
-- **Zabbix:** zabbix
-- **MariaDB:** zabbix123
 
 ## 🚨 WICHTIG: Alle Docker-Volumes sichern!
 
