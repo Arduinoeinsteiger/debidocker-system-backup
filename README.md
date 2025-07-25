@@ -2,30 +2,24 @@
 
 ## 📋 Übersicht
 
-GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243).
-
-## 🖥️ System-Details
-
-- **Hostname:** debidocker
-- **IP-Adresse:** 192.168.1.243
-- **Öffentliche IP:** 77.74.80.68
-- **Betriebssystem:** Debian 12 (Bookworm)
+GitHub-Repository für das Debian-Docker-System.
 
 ## 🐳 Docker-Services
 
 ### ✅ Laufende Services
 - **Nextcloud** (Port 8080)
   - Datenbank: PostgreSQL
-  - Admin: nextcloud_vgnc_2024
   - Redis: Aktiv
 
 - **TURN-Server** (CoTURN) (Ports 3478, 5349)
   - Domains: turn.vgnc.org, stun.vgnc.org
-  - Credentials: talk / talkpassword123
 
 - **Netdata** (Monitoring) (Port 19999)
-  - Domain: monitoring.vgnc.org
   - Real-time Monitoring
+
+- **n8n** (Workflow Automation)
+- **Portainer** (Docker Management)
+- **Telegram Bot**
 
 ## 📦 Backup-Strategie
 
@@ -33,7 +27,6 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 - Docker-Compose-Dateien
 - System-Konfigurationen
 - SSL-Zertifikate
-- Cloudflare-Konfiguration
 
 ### Lokale Backups
 - **ALLE Docker-Volumes** (sehr wichtig!)
@@ -50,16 +43,7 @@ cd debidocker-system-backup
 
 # Docker-Services starten
 docker-compose up -d
-
-# Prüfe Services
-docker ps
 ```
-
-## 🔐 Wichtige Daten
-
-- **Cloudflare API-Token:** P7tzGS9A29be-ezahWFtPvBJ0xnsRogSv395AzxP
-- **Nextcloud Admin:** nextcloud_vgnc_2024
-- **TURN-Server:** talkpassword123
 
 ## 🚨 WICHTIG: Alle Docker-Volumes sichern!
 
@@ -78,3 +62,8 @@ done
 - **Letzte Aktualisierung:** 25. Juli 2024
 - **Status:** ✅ Alle Services laufen
 - **Backup-Status:** ✅ Alle Docker-Volumes gesichert
+
+## 🔐 Sicherheit
+
+**WICHTIG:** Sensible Daten (IP-Adressen, API-Tokens, Passwörter) sind NICHT in diesem Repository gespeichert!
+Diese müssen nach der Wiederherstellung manuell konfiguriert werden.
