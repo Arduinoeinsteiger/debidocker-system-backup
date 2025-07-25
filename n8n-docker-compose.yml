@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=n8n_vgnc_2024
+      - N8N_HOST=192.168.1.243
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_USER_MANAGEMENT_DISABLED=false
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_LOG_LEVEL=info
+      - N8N_SECURE_COOKIE=false
+      - N8N_DATABASE_TYPE=postgresdb
+      - N8N_DATABASE_POSTGRESDB_HOST=postgres
+      - N8N_DATABASE_POSTGRESDB_PORT=5432
+      - N8N_DATABASE_POSTGRESDB_DATABASE=n8n
+      - N8N_DATABASE_POSTGRESDB_USER=n8n
+      - N8N_DATABASE_POSTGRESDB_PASSWORD=n8n_db_password_2024
+      - N8N_DATABASE_POSTGRESDB_SCHEMA=public
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://192.168.1.243:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres
+    networks:
+      - n8n_network
+
+  postgres:
+    image: postgres:15
+    container_name: n8n_postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=n8n
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n_db_password_2024
+      - POSTGRES_NON_ROOT_USER=n8n
+      - POSTGRES_NON_ROOT_PASSWORD=n8n_db_password_2024
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - n8n_network
+
+volumes:
+  n8n_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  n8n_network:
+    driver: bridge

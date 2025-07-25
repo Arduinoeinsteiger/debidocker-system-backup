@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build: .
+    container_name: telegram-system-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - SERVER_IP=192.168.1.243
+      - SERVER_NAME=debidocker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc:/host/etc:ro
+    network_mode: host
+    privileged: true
