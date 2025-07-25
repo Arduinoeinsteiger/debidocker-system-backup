@@ -11,13 +11,28 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 - **Öffentliche IP:** 77.74.80.68
 - **Betriebssystem:** Debian 12 (Bookworm)
 
-## 🐳 Docker-Services
+## 🐳 ALLE Docker-Services
 
+### ✅ Laufende Services
 - **Nextcloud** (Port 8080)
-- **TURN-Server** (CoTURN) (Ports 3478, 5349)
-- **Netdata** (Monitoring) (Port 19999)
+  - Datenbank: PostgreSQL
+  - Admin: nextcloud_vgnc_2024
+  - Redis: Aktiv
 
-## 📦 Backup-Strategie
+- **TURN-Server** (CoTURN) (Ports 3478, 5349)
+  - Domains: turn.vgnc.org, stun.vgnc.org
+  - Credentials: talk / talkpassword123
+
+- **Netdata** (Monitoring) (Port 19999)
+  - Domain: monitoring.vgnc.org
+  - Real-time Monitoring
+
+- **Zabbix** (Monitoring) (Ports 10051, 10050)
+  - Web-Frontend: http://localhost/zabbix/
+  - Login: Admin / zabbix
+  - Datenbank: MariaDB
+
+## �� Backup-Strategie
 
 ### GitHub-Repository
 - Docker-Compose-Dateien
@@ -26,9 +41,10 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 - Cloudflare-Konfiguration
 
 ### Lokale Backups
-- Docker-Volumes
-- Datenbank-Dumps
+- **ALLE Docker-Volumes** (sehr wichtig!)
+- Datenbank-Dumps (PostgreSQL + MariaDB)
 - System-Logs
+- Redis-Dumps
 
 ## 🔄 Wiederherstellung
 
@@ -37,8 +53,11 @@ GitHub-Repository für das Debian-Docker-System auf `debidocker` (192.168.1.243)
 git clone https://github.com/Arduinoeinsteiger/debidocker-system-backup.git
 cd debidocker-system-backup
 
-# Docker-Services starten
+# ALLE Docker-Services starten
 docker-compose up -d
+
+# Prüfe alle Services
+docker ps
 ```
 
 ## 🔐 Wichtige Daten
@@ -46,8 +65,23 @@ docker-compose up -d
 - **Cloudflare API-Token:** P7tzGS9A29be-ezahWFtPvBJ0xnsRogSv395AzxP
 - **Nextcloud Admin:** nextcloud_vgnc_2024
 - **TURN-Server:** talkpassword123
+- **Zabbix:** zabbix
+- **MariaDB:** zabbix123
+
+## 🚨 WICHTIG: Alle Docker-Volumes sichern!
+
+```bash
+# Alle Volumes auflisten
+docker volume ls
+
+# Alle Volumes sichern
+for volume in $(docker volume ls --format "{{.Name}}"); do
+    docker run --rm -v $volume:/data -v $(pwd):/backup alpine tar czf /backup/$volume.tar.gz -C /data .
+done
+```
 
 ## 📞 Support
 
 - **Letzte Aktualisierung:** 25. Juli 2024
 - **Status:** ✅ Alle Services laufen
+- **Backup-Status:** ✅ Alle Docker-Volumes gesichert
